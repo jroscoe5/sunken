@@ -1,3 +1,5 @@
+# UNFINISHED AND BACKLOGGED
+
 from SunkenDiceRoller import SunkenDiceRoller
 
 file = open('auth\\token.dtoken')
