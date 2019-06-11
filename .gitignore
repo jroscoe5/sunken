@@ -5,6 +5,9 @@
 [Bb]uilds/
 Assets/AssetStoreTools*
 
+# Discord tokens
+*.dtoken
+
 # Visual Studio cache directory
 .vs/
 
