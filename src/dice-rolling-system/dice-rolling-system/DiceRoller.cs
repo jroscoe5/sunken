@@ -4,15 +4,25 @@ using System.Text;
 
 namespace dice_rolling_system
 {
-    static class DiceRoller
+    public class DiceRoller
     {
-        static DiceRoller() { }
-        
-        // RNG source - to get an integer use random.Next(inclusive, exclusive);
-        private static Random random = new Random(Guid.NewGuid().GetHashCode());
+        public DiceRoller() { }
 
-        // Internal array to keep track of previous roll. Do not return this - return a new array instead.
-        private static int[] currentRolls;
+        // RNG source - to get an integer use random.Next(inclusive, exclusive);
+        private readonly Random random = new Random(Guid.NewGuid().GetHashCode());
+
+        // Array to keep track of previous roll.
+        public int[] CurrentRoll
+        {
+            get
+            {
+                return (CurrentRoll == null) ? null : (int[])CurrentRoll.Clone();
+            }
+            private set
+            {
+                CurrentRoll = value;
+            }
+        }
 
         /// <summary>
         /// Rolls a given number of 6 sided dice and returns an array of rolls.
@@ -20,7 +30,7 @@ namespace dice_rolling_system
         /// </summary>
         /// <param name="num">Number of dice to roll.</param>
         /// <returns>An array of rolls with size equal to num</returns>
-        static public int[] Roll(int num)
+        public int[] Roll(int num)
         {
             return null;
             // TODO:
@@ -35,21 +45,12 @@ namespace dice_rolling_system
         /// </summary>
         /// <param name="targets">Array of target dice to reroll</param>
         /// <returns>An array of rolls with size equal to previous roll size</returns>
-        static public int[] Reroll(int[] targets)
+        public int[] Reroll(int[] targets)
         {
             return null;
             // TODO: 
             // Reroll any number of dice from the previous roll and return an array
             // Store rolls in currentRolls
-        }
-
-        /// <summary>
-        /// Returns a copy of the last roll or reroll if it exists
-        /// </summary>
-        /// <returns>Returns a copy of the last roll or null</returns>
-        static public int[] CurrentRoll()
-        {
-            return (currentRolls == null)? null : (int[])currentRolls.Clone();
         }
     }
 }
