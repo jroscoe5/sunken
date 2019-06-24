@@ -1,3 +1,12 @@
-<p>
-  game works!
-</p>
+<table class="is-bordered">
+  <tr *ngFor="let row of Game.map.spaces">
+    <td *ngFor="let col of row" 
+    [class.empty] = "col.state == 0"
+    [class.occupied] = "col.state == 1"
+    [class.solid] = "col.state == 2"
+    [class.drop] = "col.state == 3"
+    >
+      {{ col.x }}, {{col.y}}, sate: {{col.state}}
+    </td>
+  </tr>
+</table>
