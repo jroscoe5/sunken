@@ -15,11 +15,18 @@ import { GameService } from '../Services/game.service';
 export class GameComponent implements OnInit {
   Game = new Game();
   MAP_SIZE = 10;
+  connectedTo = [];
 
   constructor(
     private gameService: GameService
   ) {
-    this.Game = this.gameService.createBoard(this.MAP_SIZE);
+    this.Game = this.gameService.createGame(this.MAP_SIZE);
+    for (let x = 0; x < this.MAP_SIZE; x++) {
+      for (let y = 0; y < this.MAP_SIZE; y++) {
+        this.connectedTo.push(x+","+y);
+      }
+    }
+    
   }
 
   ngOnInit() {

@@ -1,12 +1,18 @@
-<table class="is-bordered">
-  <tr *ngFor="let row of Game.map.spaces">
-    <td *ngFor="let col of row" 
-    [class.empty] = "col.state == 0"
-    [class.occupied] = "col.state == 1"
-    [class.solid] = "col.state == 2"
-    [class.drop] = "col.state == 3"
-    >
-      {{ col.x }}, {{col.y}}, sate: {{col.state}}
-    </td>
-  </tr>
-</table>
+<div class="drag-container">
+  <table class="is-bordered">
+    <tr *ngFor="let row of Game.map.spaces; let x = index">
+      <td *ngFor="let col of row; let y = index"
+        [class.empty] = "col.state == 0"
+        [class.occupied] = "col.state == 1"
+        [class.solid] = "col.state == 2"
+        [class.drop] = "col.state == 3">
+        <div cdkDropList id="{{x}},{{y}}" [cdkDropListData]="Game.map.spaces[x][y]"
+        [cdkDropListConnectedTo]="connectedTo" class="item-list">
+          <div class="item-box" *ngFor="let player of Game.map.spaces[x][y].player" cdkDrag>
+            <img width="75%" src="../../assets/imgs/panda.png"/>
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
