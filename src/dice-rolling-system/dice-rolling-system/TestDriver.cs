@@ -6,7 +6,7 @@ namespace dice_rolling_system
     class TestDriver
     {
         static Random random = new Random(Guid.NewGuid().GetHashCode());
-
+        static DiceRoller DiceRoller = new DiceRoller();
         static void Main(string[] args)
         {
             RunTest("CorrectRollCount", CorrectRollCount);
@@ -59,7 +59,7 @@ namespace dice_rolling_system
         {
             var rolls = DiceRoller.Roll(100);
             rolls[50] = -1;
-            return DiceRoller.CurrentRoll()[50] != -1;
+            return DiceRoller.CurrentRoll[50] != -1;
         }
 
         static bool CorrectRerollEncapsulation()
@@ -67,7 +67,7 @@ namespace dice_rolling_system
             DiceRoller.Roll(100);
             var rolls = DiceRoller.Reroll(new int[]{0, 50, 3});
             rolls[50] = -1;
-            return DiceRoller.CurrentRoll()[50] != -1;
+            return DiceRoller.CurrentRoll[50] != -1;
         }
 
         static bool CorrectRerollFunctionality()
