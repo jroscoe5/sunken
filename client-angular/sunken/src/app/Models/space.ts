@@ -4,7 +4,8 @@ enum state{
     Empty = 0,
     Occupied = 1,
     Solid = 2,
-    Drop = 3
+    Drop = 3,
+    Turn = 4
 }
 
 export class Space {

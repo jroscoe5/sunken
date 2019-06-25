@@ -6,6 +6,8 @@ import { mapToMapExpression } from '@angular/compiler/src/render3/util';
 import { Space } from '../Models/space';
 import { GameService } from '../Services/game.service';
 import { CdkDragDrop, transferArrayItem, moveItemInArray, CdkDrag, CdkDropList } from '@angular/cdk/drag-drop';
+import { HostListener } from '@angular/core';
+import { Key } from 'protractor';
 
 @Component({
   selector: 'app-game',
@@ -18,29 +20,65 @@ export class GameComponent implements OnInit {
   Game: Game;
 
   constructor(
-    private gameService: GameService
-  ) {}
+    private gameService: GameService,
+  ) { }
 
   ngOnInit() {
     this.Game = this.gameService.createGame(this.MAP_SIZE);
   }
 
-  drop(event: CdkDragDrop<string[]>) {
+  @HostListener('document:keydown', ['$event'])
+  onKey(event: KeyboardEvent) { 
+    // switch(event.key){
+    //   case Key.UP:
+    //   case "w": {
+
+    //     break;
+    //   }
+    //   case Key.DOWN:
+    //   case "s": {
+
+    //     break;
+    //   }
+    //   case Key.LEFT: 
+    //   case "a": {
+
+    //     break;
+    //   }
+    //   case Key.RIGHT:
+    //   case "d": {
+
+    //     break;
+    //   }
+    //   default: {
+
+    //     break;
+    //   }
+    // }
+  }
+
+  public drop = (event: CdkDragDrop<string[]>) => {
     if (event.previousContainer != event.container) {
       transferArrayItem(event.previousContainer.data,
-                        event.container.data,
-                        event.previousIndex,
-                        event.currentIndex);
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex);
+      let previousSpace = this.findSpace(event.previousContainer.id);
+      let newSpace = this.findSpace(event.container.id);
+      this.gameService.updateGame(this.Game, previousSpace, newSpace);
     }
   }
 
-  isOccupied(drag: CdkDrag, drop: CdkDropList){
-    let indexes = drop.id.split(',');
-    // add space state check here
-    if (drop.data[0] == null){
+  public isOccupied = (drag: CdkDrag, drop: CdkDropList) => {
+    let space = this.findSpace(drop.id);
+    if (drop.data[0] == null && space.state == 0) {
       return true;
     }
     return false;
   }
 
+  private findSpace(cords: string): Space {
+    let spaceCords = cords.split(',');
+    return this.Game.map.spaces[parseInt(spaceCords[0])][parseInt(spaceCords[1])];
+  }
 }

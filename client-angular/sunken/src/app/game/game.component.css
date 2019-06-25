@@ -9,8 +9,12 @@ td{
     height: 75px;
     text-align: center;
     color: white;
+    min-width: 75px;
 }
 
+.turn {
+    background-color: blue;
+}
 
 .empty {
     background-color: transparent;
