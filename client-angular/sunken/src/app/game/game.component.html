@@ -1,18 +1,23 @@
-<div class="drag-container">
-  <table class="is-bordered">
+
+<div cdkDropListGroup>
+  <table>
     <tr *ngFor="let row of Game.map.spaces; let x = index">
       <td *ngFor="let col of row; let y = index"
-        [class.empty] = "col.state == 0"
+      [class.empty] = "col.state == 0"
         [class.occupied] = "col.state == 1"
         [class.solid] = "col.state == 2"
         [class.drop] = "col.state == 3">
-        <div cdkDropList id="{{x}},{{y}}" [cdkDropListData]="Game.map.spaces[x][y]"
-        [cdkDropListConnectedTo]="connectedTo" class="item-list">
-          <div class="item-box" *ngFor="let player of Game.map.spaces[x][y].player" cdkDrag>
-            <img width="75%" src="../../assets/imgs/panda.png"/>
+        <div  cdkDropList cdkDropListSortingDisabled
+              id="{{x}},{{y}}"
+              [cdkDropListData]="col.player"
+              (cdkDropListDropped)="drop($event)"
+              [cdkDropListEnterPredicate]="isOccupied"
+              style="width:100%; height:100%">
+          <div *ngFor="let player of col.player" cdkDrag>
+            <img width="95%" [src]="player.img"/>
           </div>
         </div>
       </td>
     </tr>
   </table>
-</div>
+</div> 

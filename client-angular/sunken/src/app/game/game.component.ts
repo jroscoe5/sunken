@@ -5,6 +5,7 @@ import { Player } from '../Models/player';
 import { mapToMapExpression } from '@angular/compiler/src/render3/util';
 import { Space } from '../Models/space';
 import { GameService } from '../Services/game.service';
+import { CdkDragDrop, transferArrayItem, moveItemInArray, CdkDrag, CdkDropList } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-game',
@@ -13,23 +14,33 @@ import { GameService } from '../Services/game.service';
   providers: [GameService]
 })
 export class GameComponent implements OnInit {
-  Game = new Game();
   MAP_SIZE = 10;
-  connectedTo = [];
+  Game: Game;
 
   constructor(
     private gameService: GameService
-  ) {
-    this.Game = this.gameService.createGame(this.MAP_SIZE);
-    for (let x = 0; x < this.MAP_SIZE; x++) {
-      for (let y = 0; y < this.MAP_SIZE; y++) {
-        this.connectedTo.push(x+","+y);
-      }
-    }
-    
-  }
+  ) {}
 
   ngOnInit() {
-    
+    this.Game = this.gameService.createGame(this.MAP_SIZE);
   }
+
+  drop(event: CdkDragDrop<string[]>) {
+    if (event.previousContainer != event.container) {
+      transferArrayItem(event.previousContainer.data,
+                        event.container.data,
+                        event.previousIndex,
+                        event.currentIndex);
+    }
+  }
+
+  isOccupied(drag: CdkDrag, drop: CdkDropList){
+    let indexes = drop.id.split(',');
+    // add space state check here
+    if (drop.data[0] == null){
+      return true;
+    }
+    return false;
+  }
+
 }

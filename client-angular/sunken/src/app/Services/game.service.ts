@@ -9,10 +9,15 @@ import { Player } from '../Models/player';
   providedIn: 'root'
 })
 export class GameService {
-
+  playerImgs = [
+    "../../assets/imgs/panda.png",
+    "../../assets/imgs/lion.png",
+    "../../assets/imgs/monkey.png",
+    "../../assets/imgs/croc.png"
+  ]
   constructor() { }
 
-  createGame(size: number = 5): Game {
+  createGame(size: number = 10): Game {
     // create tiles for board
     let tiles = [];
     for (let x = 0; x < size; x++) {
@@ -25,9 +30,10 @@ export class GameService {
       }
     }
     let players = [];
-    for (let x = 0; x < 4; x++){
-      players[x] = new Player({
-        id: x
+    for (let z = 0; z < 4; z++){
+      players[z+1] = new Player({
+        id: z+1,
+        img: this.playerImgs[z]
       });
     }
     let game = new Game({
@@ -54,14 +60,16 @@ export class GameService {
         if (newState == 1 && playerCount < 4){
           game.map.spaces[x][y].state = newState;
           playerCount++;
-          let playerId = this.getRandomInt(0,4);
+          let playerId = playerCount;
           game.map.spaces[x][y].player = [game.players[playerId]];
         }
         else if (newState != 1) {
           game.map.spaces[x][y].state = newState
+          game.map.spaces[x][y].player = [];
         }
         else {
           game.map.spaces[x][y].state = 0;
+          game.map.spaces[x][y].player = [];
         }
       }
     }
