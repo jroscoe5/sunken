@@ -23,7 +23,7 @@ export class GameService {
   ]
   constructor() { }
 
-  createGame(size: number = 10): Game {
+  createGame(size: number = 10, playerCount: number = 4): Game {
     // create tiles for board
     let tiles = [];
     for (let x = 0; x < size; x++) {
@@ -35,22 +35,30 @@ export class GameService {
         });
       }
     }
+    let startTiles = [];
     let players = [];
-    for (let z = 0; z < 4; z++){
+    for (let z = 0; z < playerCount; z++){
       players[z+1] = new Player({
         id: z+1,
         img: this.playerImgs[z],
         name: this.playerNames[z]
       });
+      startTiles[z] = [];
+      startTiles[z][0] = new Space({
+        x: -1,
+        y: z
+      });
     }
     let game = new Game({
       id: this.getRandomInt(0, 1000),
       map: new Map({
-        spaces: tiles
+        spaces: tiles,
+        startSpaces: startTiles
       }),
       players: players
     });
-    game = this.setRandomBoard(game, size)
+    game = this.setRandomBoard(game, size);
+    this.NewStart(game, players);
     return game;
   }
 
@@ -59,20 +67,14 @@ export class GameService {
   }
 
   setRandomBoard(game: Game, size: number) {
-    let playerCount = 0;
     let spaces = game.map.spaces;
     for (let x = 0; x < size; x++) {
       for (let y = 0; y < size; y++) {
         let newState = this.getRandomInt(0, 3);
         let space = spaces[x][y];
-        if (newState == 1 && playerCount < 4){
-          space.state = newState;
-          playerCount++;
-          let playerId = playerCount;
-          space.player = [game.players[playerId]];
-          let player = <Player>game.players[playerId];
-          player.space = space;
-          player.notMyTurn = true;
+        if (newState == 1){
+          space.state = 0;
+          space.player = [];
         }
         else if (newState != 1) {
           space.state = newState
@@ -84,12 +86,28 @@ export class GameService {
         }
       }
     }
+    
+
+    return game;
+  }
+
+  NewStart(game: Game, players: Player[]){
+    
     game.order = [1,2,3,4];
     game.turnNum = 0;
     game.turn = <Player>game.players[game.order[game.turnNum]];
     game.turn.notMyTurn = false;
+    for (let x = 0; x < game.order.length; x++){
+      var space = <Space>game.map.startSpaces[x][0];
+      space.player = [game.players[x+1]];
+      let player = <Player>game.players[x+1];
+      player.space = space;
+      player.space.state = 1;
+      player.notMyTurn = true;
+    }
     game.turn.space.state = 4;
-    return game;
+    game.turn.notMyTurn = false;
+
   }
 
   updateGame(game: Game, oldSpace: Space, newSpace: Space){
@@ -106,9 +124,9 @@ export class GameService {
   }
 
   private updateTurn(game: Game){
-    console.log("old Turn: " + game.turnNum);
     let player = <Player>game.players[game.order[game.turnNum]];
-    player.space.state = 1;
+    if (player.space)
+      player.space.state = 1;
     player.notMyTurn = true;
     if (game.turnNum == 3){
       game.turnNum = 0;
@@ -119,6 +137,5 @@ export class GameService {
     game.turn = <Player>game.players[game.order[game.turnNum]];
     game.turn.notMyTurn = false;
     game.turn.space.state = 4;
-    console.log("new Turn: " + game.turnNum);
   }
 }

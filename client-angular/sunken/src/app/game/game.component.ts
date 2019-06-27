@@ -18,6 +18,7 @@ import { Key } from 'protractor';
 export class GameComponent implements OnInit {
   MAP_SIZE = 10;
   Game: Game;
+  startSpace: Space;
 
   constructor(
     private gameService: GameService,
@@ -25,6 +26,7 @@ export class GameComponent implements OnInit {
 
   ngOnInit() {
     this.Game = this.gameService.createGame(this.MAP_SIZE);
+    this.startSpace = new Space;
   }
 
   @HostListener('document:keydown', ['$event'])
@@ -64,6 +66,7 @@ export class GameComponent implements OnInit {
         event.previousIndex,
         event.currentIndex);
       let previousSpace = this.findSpace(event.previousContainer.id);
+      console.log(event.container.id);
       let newSpace = this.findSpace(event.container.id);
       this.gameService.updateGame(this.Game, previousSpace, newSpace);
     }
@@ -71,14 +74,26 @@ export class GameComponent implements OnInit {
 
   public isOccupied = (drag: CdkDrag, drop: CdkDropList) => {
     let space = this.findSpace(drop.id);
-    if (drop.data[0] == null && space.state == 0) {
+    if (space == null)
+      return true;
+    if (drop.data.length > 0)
+      return false;
+    if (space.state == 0) {
       return true;
     }
     return false;
   }
 
-  private findSpace(cords: string): Space {
-    let spaceCords = cords.split(',');
-    return this.Game.map.spaces[parseInt(spaceCords[0])][parseInt(spaceCords[1])];
+  private findSpace(cords: string): Space {  
+    var spaceCords = cords.split(',');
+    if (cords.charAt(0) == "-") {
+      cords = cords.substr(1);
+      spaceCords = cords.split(",");
+      return this.Game.map.startSpaces[parseInt(spaceCords[0])][parseInt(spaceCords[1])]
+    }
+    if (spaceCords.length == 2 && parseInt(spaceCords[0]) >= 0){
+      return this.Game.map.spaces[parseInt(spaceCords[0])][parseInt(spaceCords[1])];
+    }
+    return null;
   }
 }
