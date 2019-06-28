@@ -18,9 +18,9 @@
         </tr>
       </table>
     </div>
-    <div class="col-sm-2" style="margin-left:20px">
+    <div class="col-sm-2" style="margin-left:20px; text-align: center">
       <h3>Start</h3>
-      <table>
+      <table style="margin: auto">
         <tr *ngFor="let row of Game.map.startSpaces; let x = index">
           <td *ngFor="let col of row; let y = index" [class.turn]="col.state == 4">
             <div cdkDropList cdkDropListSortingDisabled id="-{{x}},{{y}}" [cdkDropListData]="col.player"
@@ -33,6 +33,7 @@
           </td>
         </tr>
       </table>
+      <button mat-stroked-button (click)="Reset()" style="text-align: center; margin-top: 10px">Reset</button>
     </div>
   </div>
 </div>

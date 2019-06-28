@@ -18,7 +18,6 @@ import { Key } from 'protractor';
 export class GameComponent implements OnInit {
   MAP_SIZE = 10;
   Game: Game;
-  startSpace: Space;
 
   constructor(
     private gameService: GameService,
@@ -26,7 +25,6 @@ export class GameComponent implements OnInit {
 
   ngOnInit() {
     this.Game = this.gameService.createGame(this.MAP_SIZE);
-    this.startSpace = new Space;
   }
 
   @HostListener('document:keydown', ['$event'])
@@ -66,10 +64,13 @@ export class GameComponent implements OnInit {
         event.previousIndex,
         event.currentIndex);
       let previousSpace = this.findSpace(event.previousContainer.id);
-      console.log(event.container.id);
       let newSpace = this.findSpace(event.container.id);
       this.gameService.updateGame(this.Game, previousSpace, newSpace);
     }
+  }
+
+  public Reset(){
+    this.Game = this.gameService.createGame(this.MAP_SIZE);
   }
 
   public isOccupied = (drag: CdkDrag, drop: CdkDropList) => {
