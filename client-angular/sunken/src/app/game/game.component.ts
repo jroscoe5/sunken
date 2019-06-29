@@ -16,7 +16,6 @@ import { Key } from 'protractor';
   providers: [GameService]
 })
 export class GameComponent implements OnInit {
-  MAP_SIZE = 10;
   Game: Game;
 
   constructor(
@@ -24,37 +23,7 @@ export class GameComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.Game = this.gameService.createGame(this.MAP_SIZE);
-  }
-
-  @HostListener('document:keydown', ['$event'])
-  onKey(event: KeyboardEvent) { 
-    // switch(event.key){
-    //   case Key.UP:
-    //   case "w": {
-
-    //     break;
-    //   }
-    //   case Key.DOWN:
-    //   case "s": {
-
-    //     break;
-    //   }
-    //   case Key.LEFT: 
-    //   case "a": {
-
-    //     break;
-    //   }
-    //   case Key.RIGHT:
-    //   case "d": {
-
-    //     break;
-    //   }
-    //   default: {
-
-    //     break;
-    //   }
-    // }
+    this.Game = this.gameService.Game;
   }
 
   public drop = (event: CdkDragDrop<string[]>) => {
@@ -65,12 +34,17 @@ export class GameComponent implements OnInit {
         event.currentIndex);
       let previousSpace = this.findSpace(event.previousContainer.id);
       let newSpace = this.findSpace(event.container.id);
-      this.gameService.updateGame(this.Game, previousSpace, newSpace);
+      this.gameService.Move(this.Game, previousSpace, newSpace);
     }
   }
 
+
   public Reset(){
-    this.Game = this.gameService.createGame(this.MAP_SIZE);
+    this.Game = this.gameService.Reset();
+  }
+
+  public EndTurn(){
+    this.gameService.EndTurn(this.Game);
   }
 
   public isOccupied = (drag: CdkDrag, drop: CdkDropList) => {

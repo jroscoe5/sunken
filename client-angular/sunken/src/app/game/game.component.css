@@ -1,16 +1,18 @@
 table {
     border: 1px solid black;
     border-spacing: 0px;
+
 }
 
 td{
     border:1px solid black;
-    width: 75px;
-    height: 75px;
+    height: 4vw;
+    width: 4vw;
     text-align: center;
     color: white;
-    min-width: 75px;
+    /* min-width: 75px; */
 }
+
 
 .turn {
     background-color: blue;
@@ -35,4 +37,10 @@ table .empty:hover {
 
 .drop {
     background-color: lightgray;
+}
+
+.EndTurnButton{
+    background-color: green;
+    color: white;
+    margin-right:10px;
 }

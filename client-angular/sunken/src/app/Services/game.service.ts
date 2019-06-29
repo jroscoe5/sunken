@@ -9,6 +9,10 @@ import { Player } from '../Models/player';
   providedIn: 'root'
 })
 export class GameService {
+  MAP_SIZE = 10;
+  PLAYERS = 4;
+  Game: Game;
+
   playerImgs = [
     "../../assets/imgs/panda.png",
     "../../assets/imgs/lion.png",
@@ -21,7 +25,9 @@ export class GameService {
     "Monkey",
     "Croc"
   ]
-  constructor() { }
+  constructor() { 
+    this.Game = this.createGame(this.MAP_SIZE);
+  }
 
   createGame(size: number = 10, playerCount: number = 4): Game {
     // create tiles for board
@@ -110,20 +116,16 @@ export class GameService {
 
   }
 
-  updateGame(game: Game, oldSpace: Space, newSpace: Space){
+  Move(game: Game, oldSpace: Space, newSpace: Space){
     let player = game.turn;
     if (oldSpace){
       oldSpace.state = 0;
     }
-    if (newSpace){
-      newSpace.state = 1;
-    }
-    player.space = newSpace;
-    this.updateTurn(game);
-    
+    player.space = newSpace;    
+    player.space.state = 4;
   }
 
-  private updateTurn(game: Game){
+  public EndTurn(game: Game){
     let player = <Player>game.players[game.order[game.turnNum]];
     if (player.space)
       player.space.state = 1;
@@ -138,4 +140,9 @@ export class GameService {
     game.turn.notMyTurn = false;
     game.turn.space.state = 4;
   }
+
+  public Reset(): Game{
+    return this.Game = this.createGame(this.MAP_SIZE, this.PLAYERS);
+  }
+
 }

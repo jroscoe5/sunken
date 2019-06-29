@@ -1,8 +1,14 @@
 <div cdkDropListGroup>
-  <div class="row">
-    <div class="col-sm-6">
-      <h3>It is {{Game.turn.name}}'s turn</h3>
-
+  <div class="row" style="margin:0px">
+    <div class="col-sm-5" style="margin-left: 15px">
+      <div class="row" >
+        <div class="col-sm-8">
+          <h3>It is {{Game.turn.name}}'s turn</h3>
+        </div>
+        <div class="col-sm-4" style="text-align: right; margin-top: 10px;">
+          <button class="EndTurnButton" mat-raised-button (click)="EndTurn()">End Turn</button>
+        </div>
+      </div>
       <table>
         <tr *ngFor="let row of Game.map.spaces; let x = index">
           <td *ngFor="let col of row; let y = index" [class.empty]="col.state == 0" [class.occupied]="col.state == 1"
@@ -33,7 +39,7 @@
           </td>
         </tr>
       </table>
-      <button mat-stroked-button (click)="Reset()" style="text-align: center; margin-top: 10px">Reset</button>
+      <button mat-raised-button (click)="Reset()" style="text-align: center; margin-top: 10px">Reset</button>
     </div>
   </div>
 </div>
