@@ -7,11 +7,13 @@ import { GameComponent } from './game/game.component';
 
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import {MatButtonModule} from '@angular/material/button';
+import { CharacterComponent } from './character/character.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    GameComponent
+    GameComponent,
+    CharacterComponent
   ],
   imports: [
     BrowserModule,
