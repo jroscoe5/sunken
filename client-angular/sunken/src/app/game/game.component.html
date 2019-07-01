@@ -1,7 +1,7 @@
 <div cdkDropListGroup>
   <div class="row" style="margin:0px">
-    <div class="col-sm-5" style="margin-left: 15px">
-      <div class="row" >
+    <div class="col-sm-5 col-xs-12">
+      <div class="row" style="margin-left:0px">
         <div class="col-sm-8">
           <h3>It is {{Game.turn.name}}'s turn</h3>
         </div>
@@ -9,37 +9,44 @@
           <button class="EndTurnButton" mat-raised-button (click)="EndTurn()">End Turn</button>
         </div>
       </div>
-      <table>
-        <tr *ngFor="let row of Game.map.spaces; let x = index">
-          <td *ngFor="let col of row; let y = index" [class.empty]="col.state == 0" [class.occupied]="col.state == 1"
-            [class.solid]="col.state == 2" [class.drop]="col.state == 3" [class.turn]="col.state == 4">
-            <div cdkDropList cdkDropListSortingDisabled id="{{x}},{{y}}" [cdkDropListData]="col.player"
-              (cdkDropListDropped)="drop($event)" [cdkDropListEnterPredicate]="isOccupied"
-              style="width:100%; height:100%">
-              <div *ngFor="let player of col.player" cdkDrag [cdkDragDisabled]="player.notMyTurn">
-                <img width="95%" [src]="player.img" />
+      <div class="col-sm-12">
+        <div style="margin-bottom: 10px">
+          <table style="margin: auto" class="StartingSpaces">
+            <tr style="height:12px">
+              <td *ngFor="let player of Game.players; let x = index" style="height:12px">
+                <div>
+                  <p style="color:black; margin:0">{{player.name}}</p>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td *ngFor="let space of Game.map.startSpaces; let x = index" [class.turn]="space.state == 4">
+                <div cdkDropList cdkDropListSortingDisabled id="-1,{{x}}" [cdkDropListData]="space.player"
+                  (cdkDropListDropped)="drop($event)" [cdkDropListEnterPredicate]="isOccupied"
+                  style="width:100%; height:100%">
+                  <div *ngFor="let player of space.player" cdkDrag [cdkDragDisabled]="player.notMyTurn">
+                    <img width="95%" [src]="player.img" />
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <table class="GameMap">
+          <tr *ngFor="let row of Game.map.spaces; let x = index">
+            <td *ngFor="let col of row; let y = index" [class.empty]="col.state == 0" [class.occupied]="col.state == 1"
+              [class.solid]="col.state == 2" [class.drop]="col.state == 3" [class.turn]="col.state == 4">
+              <div cdkDropList cdkDropListSortingDisabled id="{{x}},{{y}}" [cdkDropListData]="col.player"
+                (cdkDropListDropped)="drop($event)" [cdkDropListEnterPredicate]="isOccupied"
+                style="width:100%; height:100%">
+                <div *ngFor="let player of col.player" cdkDrag [cdkDragDisabled]="player.notMyTurn">
+                  <img width="95%" [src]="player.img" />
+                </div>
               </div>
-            </div>
-          </td>
-        </tr>
-      </table>
-    </div>
-    <div class="col-sm-2" style="margin-left:20px; text-align: center">
-      <h3>Start</h3>
-      <table style="margin: auto">
-        <tr *ngFor="let row of Game.map.startSpaces; let x = index">
-          <td *ngFor="let col of row; let y = index" [class.turn]="col.state == 4">
-            <div cdkDropList cdkDropListSortingDisabled id="-{{x}},{{y}}" [cdkDropListData]="col.player"
-              (cdkDropListDropped)="drop($event)" [cdkDropListEnterPredicate]="isOccupied"
-              style="width:100%; height:100%">
-              <div *ngFor="let player of col.player" cdkDrag [cdkDragDisabled]="player.notMyTurn">
-                <img width="95%" [src]="player.img" />
-              </div>
-            </div>
-          </td>
-        </tr>
-      </table>
-      <button mat-raised-button (click)="Reset()" style="text-align: center; margin-top: 10px">Reset</button>
+            </td>
+          </tr>
+        </table>
+      </div>
     </div>
   </div>
 </div>

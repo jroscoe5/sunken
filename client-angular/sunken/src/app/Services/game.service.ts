@@ -44,13 +44,13 @@ export class GameService {
     let startTiles = [];
     let players = [];
     for (let z = 0; z < playerCount; z++){
-      players[z+1] = new Player({
-        id: z+1,
+      players[z] = new Player({
+        id: z,
         img: this.playerImgs[z],
         name: this.playerNames[z]
       });
       startTiles[z] = [];
-      startTiles[z][0] = new Space({
+      startTiles[z] = new Space({
         x: -1,
         y: z
       });
@@ -99,14 +99,14 @@ export class GameService {
 
   NewStart(game: Game, players: Player[]){
     
-    game.order = [1,2,3,4];
+    game.order = [0,1,2,3];
     game.turnNum = 0;
     game.turn = <Player>game.players[game.order[game.turnNum]];
     game.turn.notMyTurn = false;
     for (let x = 0; x < game.order.length; x++){
-      var space = <Space>game.map.startSpaces[x][0];
-      space.player = [game.players[x+1]];
-      let player = <Player>game.players[x+1];
+      var space = <Space>game.map.startSpaces[x];
+      space.player = [game.players[x]];
+      let player = <Player>game.players[x];
       player.space = space;
       player.space.state = 1;
       player.notMyTurn = true;

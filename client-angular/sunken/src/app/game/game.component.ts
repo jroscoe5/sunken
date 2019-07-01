@@ -34,6 +34,7 @@ export class GameComponent implements OnInit {
         event.currentIndex);
       let previousSpace = this.findSpace(event.previousContainer.id);
       let newSpace = this.findSpace(event.container.id);
+
       this.gameService.Move(this.Game, previousSpace, newSpace);
     }
   }
@@ -64,7 +65,7 @@ export class GameComponent implements OnInit {
     if (cords.charAt(0) == "-") {
       cords = cords.substr(1);
       spaceCords = cords.split(",");
-      return this.Game.map.startSpaces[parseInt(spaceCords[0])][parseInt(spaceCords[1])]
+      return <Space>this.Game.map.startSpaces[parseInt(spaceCords[1])]
     }
     if (spaceCords.length == 2 && parseInt(spaceCords[0]) >= 0){
       return this.Game.map.spaces[parseInt(spaceCords[0])][parseInt(spaceCords[1])];

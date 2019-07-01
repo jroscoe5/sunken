@@ -10,9 +10,21 @@ td{
     width: 4vw;
     text-align: center;
     color: white;
-    /* min-width: 75px; */
 }
 
+@media only screen and (max-width: 768px) {
+    td {
+        height: 9vw;
+        widows: 9vw;
+    }
+    .GameMap {
+        width:100%;
+    } 
+    .StartingSpaces td {
+        height: 9vw;
+        width: 9vw;
+    }
+}
 
 .turn {
     background-color: blue;
