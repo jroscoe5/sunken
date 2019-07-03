@@ -7,8 +7,6 @@ export class Player {
     img: string;
     space: Space;
     notMyTurn: boolean;
-    stats: Stats;
-
 
     constructor(values: Object = {}) {
         Object.assign(this, values);

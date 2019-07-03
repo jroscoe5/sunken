@@ -1,13 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Game } from '../Models/game';
-import { Player } from '../Models/player';
-import { mapToMapExpression } from '@angular/compiler/src/render3/util';
 import { Space } from '../Models/space';
 import { GameService } from '../Services/game.service';
 import { CdkDragDrop, transferArrayItem, moveItemInArray, CdkDrag, CdkDropList } from '@angular/cdk/drag-drop';
-import { HostListener } from '@angular/core';
-import { Key } from 'protractor';
+import { CharacterComponent } from '../Character/character.component';
+
 
 @Component({
   selector: 'app-game',
