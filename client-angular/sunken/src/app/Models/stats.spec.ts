@@ -1,7 +1,7 @@
-import { Stats } from './stats';
+import { Stat } from './stat';
 
 describe('Stat', () => {
   it('should create an instance', () => {
-    expect(new Stats()).toBeTruthy();
+    expect(new Stat()).toBeTruthy();
   });
 });

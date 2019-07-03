@@ -1,5 +1,5 @@
 import { Space } from './space';
-import { Stats } from './stats';
+import { Stat } from './stat';
 
 export class Player {
     id: string;

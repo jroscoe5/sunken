@@ -1,8 +1,23 @@
-<div class="row">
-  <div class="col-sm-2">
-    <p>here</p>
-  </div>
-  <div class="col-sm-10">
-    <p>now here</p>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-3">
+      <table>
+        <tr *ngFor="let stat of Character.stats; let x = index">
+          <td>
+            <div class="row">
+              <div class="col-sm-5 StatLabel align-self-center">
+                <p>{{stat.name}}</p>
+              </div>
+              <div class="StatContainer col-sm-7">
+                <h1>{{stat.current}}</h1>
+                <p>Max: {{stat.max}}</p>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div class="col-sm-9">
+    </div>
   </div>
 </div>
