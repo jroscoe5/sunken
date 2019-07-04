@@ -1,14 +1,18 @@
-<div class="container">
-  <div class="row">
-    <div class="col-sm-3">
+
+  <div class="row" style="margin: 20px 0px;">
+    <div class="col-sm-8">
       <table>
-        <tr *ngFor="let stat of Character.stats; let x = index">
-          <td>
-            <div class="row">
-              <div class="col-sm-5 StatLabel align-self-center">
-                <p>{{stat.name}}</p>
-              </div>
-              <div class="StatContainer col-sm-7">
+        <tr>
+          <td *ngFor="let stat of Character.stats">
+            <div class="StatLabel" [ngStyle]="{'background-color': stat.color}">
+              {{stat.name}}
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td *ngFor="let stat of Character.stats">
+            <div class="StatValue">
+              <div class="StatContainer">
                 <h1>{{stat.current}}</h1>
                 <p>Max: {{stat.max}}</p>
               </div>
@@ -17,7 +21,11 @@
         </tr>
       </table>
     </div>
-    <div class="col-sm-9">
+    <div class="col-sm-4">
+      <div class="rwo">
+        <div class="col-sm-12 StatLabel">
+          Brands
+        </div>
+      </div>
     </div>
   </div>
-</div>

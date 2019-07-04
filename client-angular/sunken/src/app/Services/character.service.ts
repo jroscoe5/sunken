@@ -21,27 +21,32 @@ export class CharacterService {
         new Stat({
           name: "Health",
           max:3,
-          current:3
+          current:3,
+          color: "red"
         }),
         new Stat({
           name: "Tenacity",
           max:3,
-          current:3
+          current:3,
+          color: "orange"
         }),
         new Stat({
           name: "Defence",
           max:3,
-          current:3
+          current:3,
+          color: "yellow"
         }),
         new Stat({
           name: "Initiative",
           max:3,
-          current:3
+          current:3,
+          color: "green"
         }),
         new Stat({
           name: "Faith",
           max:3,
-          current:3
+          current:3,
+          color:"royalblue"
         })
       ]
     });

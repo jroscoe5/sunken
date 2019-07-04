@@ -27,7 +27,7 @@ td{
 }
 
 .turn {
-    background-color: blue;
+    background-color: royalblue;
 }
 
 .empty {
@@ -36,7 +36,7 @@ td{
 }
 
 table .empty:hover {
-    background-color: blue;
+    background-color: royalblue;
 }
 
 .occupied{
