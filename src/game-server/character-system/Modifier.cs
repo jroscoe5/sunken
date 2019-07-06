@@ -9,7 +9,7 @@
             Name = name;
             Description = description;
         }
-        public virtual void Modify() { }
+        public virtual void Modify(object obj) { }
         public virtual bool IsActive() { return false; }
     }
 }
