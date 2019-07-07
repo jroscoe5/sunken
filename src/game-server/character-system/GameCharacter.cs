@@ -25,7 +25,6 @@ namespace character_system
             Inflictions = inflictions ?? new List<Infliction>();
             Brands = brands ?? new List<Brand>();
             Dice = new DiceRoller();
-            Dice.Roll(5);
         }
 
         public string ToJson()

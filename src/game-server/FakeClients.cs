@@ -18,12 +18,7 @@ namespace game_server
             Console.WriteLine(server.RollInitiative(bridger).Result);
             Console.WriteLine(server.RollInitiative(jonnie).Result);
 
-
- 
             Console.WriteLine(server.State);
-
-
-
         }
     }
 }

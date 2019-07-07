@@ -59,7 +59,6 @@ namespace game_server
                     }
                 }
                 GameCharacter character = new GameCharacter(username);
-                Console.WriteLine(character.ToJson());
                 lock (characterLock)
                 {
                     gameCharacters.Add(character);     
@@ -72,16 +71,18 @@ namespace game_server
         {
             return await Task.Run(() =>
             {
+                // gameCharacters should be safe from modifications atm
+                GameCharacter character = gameCharacters.Find(x => x.Id == id);
+                if (character == null)
+                    return -1;
+
                 lock (stateLock)
                 {
                     if (State != GameState.InitiativeRolling || currCount == maxCount)
                         return -1;
                     currCount++;
                 }
-                // gameCharacters should be safe from modifications atm
-                GameCharacter character = gameCharacters.Find(x => x.Id == id);
-                if (character == null)
-                    return -1;
+
                 character.Stats.Modify(initiative: character.Dice.RollOne()); // check for any additional modifiers here
 
                 lock (stateLock)
@@ -108,6 +109,14 @@ namespace game_server
                     }
                 }
                 return character.Stats.Initiative;
+            });
+        }
+
+        public async Task<bool> TakeTurn(string id)
+        {
+            return await Task.Run(() =>
+            {
+                return true;
             });
         }
 
