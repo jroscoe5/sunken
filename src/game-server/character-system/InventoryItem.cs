@@ -20,5 +20,16 @@ namespace character_system
             Innate = innate ?? new Innate();
             Blessing = blessing ?? new Blessing();
         }
+
+        public virtual string ToJson()
+        {
+            return "{" +
+                "\"id\" : " + "\"" + Id + "\", " +
+                "\"name\" : " + "\"" + Name + "\", " +
+                "\"power\" : " + Power + ", " +
+                "\"weight\" : " + Weight + ", " +
+                "\"innate\" : " + Innate.ToJson() + ", " +
+                "\"blessing\" : " + Blessing.ToJson() + "}";
+        }
     }
 }

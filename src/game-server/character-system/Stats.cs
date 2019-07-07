@@ -1,4 +1,6 @@
-﻿namespace character_system
+﻿using System;
+
+namespace character_system
 {
     public class Stats
     {
@@ -37,6 +39,21 @@
             Defence += defence; MaxDefence += maxDefence;
             Initiative += initiative; MaxInitiative += maxInitiative;
             Faith += faith; MaxFaith += maxFaith;
+        }
+
+        public string ToJson()
+        {
+            return "{" +
+                "\"health\" : " + Health + ", " +
+                "\"maxHealth\" : " + MaxHealth + ", " +
+                "\"tenacity\" : " + Tenacity + ", " +
+                "\"maxTenacity\" : " + MaxTenacity + ", " +
+                "\"defence\" : " + Defence + ", " +
+                "\"maxDefence\" : " + MaxDefence + ", " +
+                "\"initiative\" : " + Initiative + ", " +
+                "\"maxInitiative\" : " + MaxInitiative + ", " +
+                "\"faith\" : " + Faith + ", " +
+                "\"maxFaith\" : " + MaxFaith + "}";
         }
     }
 }

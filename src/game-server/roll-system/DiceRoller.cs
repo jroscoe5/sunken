@@ -12,17 +12,7 @@ namespace roll_system
         private readonly Random random = new Random(Guid.NewGuid().GetHashCode());
 
         // Array to keep track of previous roll.
-        public int[] CurrentRoll
-        {
-            get
-            {
-                return (CurrentRoll == null) ? null : (int[])CurrentRoll.Clone();
-            }
-            private set
-            {
-                CurrentRoll = value;
-            }
-        }
+        public int[] CurrentRoll { get; protected set; }
 
         /// <summary>
         /// Rolls a given number of 6 sided dice and returns an array of rolls.
@@ -61,6 +51,20 @@ namespace roll_system
                 }
             }
             return (int[])CurrentRoll.Clone();
+        }
+
+        public string ToJson()
+        {
+            string rolls = "";
+            if (CurrentRoll.Length > 0)
+            {
+                for (int i = 0; i < CurrentRoll.Length - 1; i++)
+                {
+                    rolls += CurrentRoll[i] + ", ";
+                }
+                rolls += CurrentRoll[CurrentRoll.Length - 1];
+            }
+                return "[" + rolls + "]";
         }
     }
 

@@ -11,5 +11,12 @@
         }
         public virtual void Modify(object obj) { }
         public virtual bool IsActive() { return false; }
+
+        public virtual string ToJson()
+        {
+            return "{" +
+                "\"name\" : " + "\"" + Name + "\", " +
+                "\"description\" : " + "\"" + Description + "\"}";
+        }
     }
 }

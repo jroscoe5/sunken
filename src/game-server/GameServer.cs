@@ -21,6 +21,8 @@ namespace game_server
     {
         private TurnManager turnManager;
 
+        private int maxCount, currCount;
+
         private List<GameCharacter> gameCharacters;
         private Mutex characterLock;
         private Mutex stateLock;
@@ -28,79 +30,86 @@ namespace game_server
         public string ServerId;
         public GameState State { get; private set; }
 
-        public GameServer()
+        public GameServer(int numPlayers)
         {
             turnManager = new TurnManager();
             gameCharacters = new List<GameCharacter>();
             characterLock = new Mutex();
+            stateLock = new Mutex();
             ServerId = Guid.NewGuid().ToString();
             State = GameState.Setup;
+            maxCount = numPlayers;
+            currCount = 0;
         }
 
-        /// <summary>
-        /// Creates a new character on the server
-        /// </summary>
-        /// <param name="name">The characters display name</param>
-        /// <returns>The characters Id for future references</returns>
-        public async Task<string> AddCharacter(string name)
+        public async Task<string> RegisterCharacter(string username)
         {
-            lock (stateLock)
+            return await Task.Run(() =>
             {
-                if (State != GameState.Setup) throw new Exception("wrong game state");
-            }
-            GameCharacter character = new GameCharacter(name);
-            lock (characterLock)
-            {
-               gameCharacters.Add(character);
-            }
-            return character.Id;
+                lock (stateLock)
+                {
+                    if (State != GameState.Setup || currCount == maxCount)
+                        return null;
+                    currCount++;
+                    // Once all players have registered, change game state
+                    if (currCount == maxCount)
+                    {
+                        State = GameState.InitiativeRolling;
+                        currCount = 0;
+                    }
+                }
+                GameCharacter character = new GameCharacter(username);
+                Console.WriteLine(character.ToJson());
+                lock (characterLock)
+                {
+                    gameCharacters.Add(character);     
+                }
+                return character.Id;
+            });
         }
 
-        /// <summary>
-        /// Rolls initative for a given character
-        /// </summary>
-        /// <param name="id">Character's Id</param>
-        /// <returns></returns>
         public async Task<int> RollInitiative(string id)
         {
-            lock (stateLock)
+            return await Task.Run(() =>
             {
-                if (State != GameState.InitiativeRolling) throw new Exception("wrong game state");
-            }
-            GameCharacter character = GetPlayerById(id);
-            character.Initiative = character.Dice.RollOne();
-            return character.Initiative;
+                lock (stateLock)
+                {
+                    if (State != GameState.InitiativeRolling || currCount == maxCount)
+                        return -1;
+                    currCount++;
+                }
+                // gameCharacters should be safe from modifications atm
+                GameCharacter character = gameCharacters.Find(x => x.Id == id);
+                if (character == null)
+                    return -1;
+                character.Stats.Modify(initiative: character.Dice.RollOne()); // check for any additional modifiers here
+
+                lock (stateLock)
+                {
+                    // Once all players have rolled, change game state
+                    if (currCount == maxCount)
+                    {
+                        State = GameState.Combat;
+                        currCount = 0;
+
+                        lock (characterLock)
+                        {
+                            gameCharacters.Sort((l, r) =>
+                            {
+                                if (l.Stats.Initiative == r.Stats.Initiative)
+                                {
+                                    if (l.Dice.RollOne() > 3)
+                                        return -1;
+                                }
+                                return r.Stats.Initiative - l.Stats.Initiative;
+                            });
+                        }
+                        turnManager.Initialize(gameCharacters.ToArray());
+                    }
+                }
+                return character.Stats.Initiative;
+            });
         }
 
-        /// <summary>
-        /// Updates the current state of the game
-        /// </summary>
-        /// <param name="serverId">Server's Id</param>
-        /// <param name="state">Target state to change to</param>
-        /// <returns>If state was changed successfully</returns>
-        public async Task<bool> ChangeState(string serverId, int state)
-        {
-            if (serverId != ServerId) return false;
-            lock (stateLock)
-            {
-                try
-                {
-                    State = (GameState) state;
-                    return true;
-                }
-                catch
-                {
-                    return false;
-                }
-            }
-        }
-
-        private GameCharacter GetPlayerById(string id)
-        {
-            lock (characterLock)
-            {
-                return gameCharacters.Find(x => x.Id == id);
-            }
-        }
     }
 }

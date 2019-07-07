@@ -1,6 +1,6 @@
 ﻿namespace character_system
 {
-    public class Weapon: InventoryItem
+    public class Weapon : InventoryItem
     {
         public bool IsOffhand { get; protected set; }
         public Innate OffInnate { get; protected set; }
@@ -13,6 +13,20 @@
             IsOffhand = offhand;
             OffInnate = offInnate ?? new Innate();
             OffBlessing = offBlessing ?? new Blessing();
+        }
+
+        public override string ToJson()
+        {
+            return "{" +
+                "\"id\" : " + "\"" + Id + "\", " +
+                "\"name\" : " + "\"" + Name + "\", " +
+                "\"power\" : " + Power + ", " +
+                "\"weight\" : " + Weight + ", " +
+                "\"isOffHand\" : " + (IsOffhand? "true" : "false") + ", " +
+                "\"innate\" : " + Innate.ToJson() + ", " +
+                "\"blessing\" : " + Blessing.ToJson() + ", " +
+                "\"offInnate\" : " + OffInnate.ToJson() + ", " +
+                "\"offBlessing\" : " + OffBlessing.ToJson() + "}";
         }
     }
 }
