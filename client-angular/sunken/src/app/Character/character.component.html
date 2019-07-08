@@ -1,31 +1,46 @@
-
-  <div class="row" style="margin: 20px 0px;">
-    <div class="col-sm-8">
-      <table>
-        <tr>
-          <td *ngFor="let stat of Character.stats">
-            <div class="StatLabel" [ngStyle]="{'background-color': stat.color}">
-              {{stat.name}}
+<div class="row" style="margin: 20px 0px;">
+  <div class="col-sm-8">
+    <table class="StatsTable">
+      <tr>
+        <td *ngFor="let stat of Character.stats">
+          <div class="TabLabel" [ngStyle]="{'background-color': stat.color}">
+            {{stat.name}}
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td *ngFor="let stat of Character.stats">
+          <div class="StatValue">
+            <div class="StatContainer">
+              <h1>{{stat.current}}</h1>
+              <p>Max: {{stat.max}}</p>
             </div>
-          </td>
-        </tr>
-        <tr>
-          <td *ngFor="let stat of Character.stats">
-            <div class="StatValue">
-              <div class="StatContainer">
-                <h1>{{stat.current}}</h1>
-                <p>Max: {{stat.max}}</p>
-              </div>
-            </div>
-          </td>
-        </tr>
-      </table>
-    </div>
-    <div class="col-sm-4">
-      <div class="rwo">
-        <div class="col-sm-12 StatLabel">
-          Brands
-        </div>
-      </div>
-    </div>
+          </div>
+        </td>
+      </tr>
+    </table>
   </div>
+  <div class="col-sm-4">
+    <table class="BrandsTable">
+      <tr>
+        <td>
+          <div class="TabLabel">
+            Brands
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div class="BrandValue">
+            <h2>Brand Dropdown</h2>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+<div class="row">
+  <div class="GearContainer">
+    
+  </div>
+</div>

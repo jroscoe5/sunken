@@ -1,4 +1,4 @@
-.StatLabel {
+.TabLabel {
     text-align: center;
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
@@ -10,22 +10,21 @@
     margin:auto;
 }
 
-.BrandLabel {
+.BrandValue {
+    height: 100px;
+    padding:10px;
+    margin: 0px;
     text-align: center;
-    border-top-left-radius: 15px;
-    border-top-right-radius: 15px;
-    border: solid gray 2px;
-    font-weight: bold;
-    text-align: center;
-    padding:5px;
-    width: 50%;
-    margin:auto;
+    display: flex;
+    justify-content: center;
+    align-content: center;
 }
 
 .StatValue{
     text-align: center;
     margin:0px;
     padding:10px;
+    height: 100px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -33,38 +32,46 @@
 
 table{
     width: 100%;
+    border-radius: 15px;
 }
 
-table tr:first-child {
+.BrandsTable tr:last-child {
+    border-radius: 20px;
+    
+}
+
+.BrandsTable tr:last-child td {
+    width:100%;
+    background-color: darkgray;
+    border-radius: 20px;
+}
+
+.StatsTable tr:first-child {
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
 }
 
-table tr:last-child {
+.StatsTable tr:last-child {
     border-radius: 10px;
 }
 
-table tr:last-child td{
+.StatsTable tr:last-child td{
     background-color: darkgray;
     border-right: solid gray 3px;
 }
 
-table tr:last-child td:first-child {
+.StatsTable tr:last-child td:first-child {
     border-bottom-left-radius: 20px;
     border-top-left-radius: 20px;
     border-right: solid gray 3px;
 }
 
-table tr:last-child td:last-child {
+.StatsTable tr:last-child td:last-child {
     border-bottom-right-radius: 20px;
     border-top-right-radius: 20px;
     border-left: solid gray 3px;
 }
 
-table tr td:last-child{
+.StatsTable tr td:last-child{
     border-right: 0px;
-}
-
-table{
-    border-radius: 15px;
 }

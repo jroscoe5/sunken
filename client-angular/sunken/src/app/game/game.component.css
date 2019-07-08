@@ -55,4 +55,7 @@ table .empty:hover {
     background-color: green;
     color: white;
     margin-right:10px;
+    padding: 8px;
+    border-radius: 10px;
+    border-color:transparent;
 }
