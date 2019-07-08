@@ -7,6 +7,7 @@ import { GameComponent } from './game/game.component';
 
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatButtonModule} from '@angular/material/button';
+import { MatList } from '@angular/material';
 import { CharacterComponent } from './character/character.component';
 
 @NgModule({
@@ -19,7 +20,8 @@ import { CharacterComponent } from './character/character.component';
     BrowserModule,
     AppRoutingModule,
     DragDropModule,
-    MatButtonModule
+    MatButtonModule,
+    MatList
   ],
   providers: [],
   bootstrap: [AppComponent]

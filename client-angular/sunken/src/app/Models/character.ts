@@ -1,17 +1,15 @@
 import { Space } from './space';
 import { Stat } from './stat';
+import { Gear } from './gear';
+import { Rucksack } from './rucksack';
 
 export class Character {
     id: string;
     name: string;
     stats: Stat[];
-    // main_hand
-    // off_hand
-    // garb
-    // trinket_pri
-    // trinket_sec
-    // trinket_tri
-    // rucksack
+    gear: Gear[];
+    rucksack: Rucksack[];
+
     // inflictions
     // brands
 

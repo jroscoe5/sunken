@@ -48,6 +48,12 @@ export class CharacterService {
           current:3,
           color:"royalblue"
         })
+      ],
+      gear: [
+
+      ],
+      rucksack: [
+        
       ]
     });
     return character;
