@@ -1,13 +1,14 @@
 import { Space } from './space';
 import { Stat } from './stat';
-import { Gear } from './gear';
+import { Worn } from './worn';
 import { Rucksack } from './rucksack';
 
 export class Character {
     id: string;
+    img: string;
     name: string;
     stats: Stat[];
-    gear: Gear[];
+    worn: Worn;
     rucksack: Rucksack[];
 
     // inflictions

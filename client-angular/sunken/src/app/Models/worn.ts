@@ -1,6 +1,6 @@
 import { Item } from './item';
 
-export class Gear {
+export class Worn {
     _items: Item[];
     main_hand: Item;
     off_hand: Item;
