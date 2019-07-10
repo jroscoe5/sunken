@@ -75,3 +75,28 @@ table{
 .StatsTable tr td:last-child{
     border-right: 0px;
 }
+
+.WornContainer {
+    border: solid 2px;
+    border-radius: 20px;
+    margin: 20px;
+    margin-top:0px;
+}
+
+.WornLabel {
+    background-color: royalblue;
+    border-top-left-radius: 17px;
+    border-top-right-radius: 17px;
+    color:white;
+    padding:10px;
+    text-align: center;
+    margin: 0px 15px;
+}
+
+.WornLabel h3 {
+    margin-top: 0px;
+}
+
+.Items {
+    margin: 15px;
+}

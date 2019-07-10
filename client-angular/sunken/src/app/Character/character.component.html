@@ -39,41 +39,55 @@
     </table>
   </div>
 </div>
-<div class="row">
-  <div class="GearContainer">
-    <mat-list>
-      <h3 mat-subheader>Gear</h3>
-      <mat-list-item *ngFor="let folder of folders">
-        <mat-icon mat-list-icon>folder</mat-icon>
-        <h4 mat-line>{{folder.name}}</h4>
-        <p mat-line> {{folder.updated | date}} </p>
-      </mat-list-item>
-      <mat-divider></mat-divider>
-      <h3 mat-subheader>Notes</h3>
-      <mat-list-item *ngFor="let note of notes">
-        <mat-icon mat-list-icon>note</mat-icon>
-        <h4 mat-line>{{note.name}}</h4>
-        <p mat-line> {{note.updated | date}} </p>
-      </mat-list-item>
-    </mat-list>
+<div class="WornContainer">
+  <div class="row">
+    <div class="WornLabel">
+      <div class="row">
+        <div class="col-sm-11 col-xs-11">
+          <h3 mat-subheader>Worn</h3>
+        </div>
+        <div class="col-sm-1 col-xs-1">
+          <img src="../../assets/imgs/{{Character.img}}" style="width:40px" />
+        </div>
+      </div>
+    </div>
+    <div cdkDropList class="col-sm-10 Items" (cdkDropListDropped)="drop($event)">
+      <div class="example-box" *ngFor="let item of Character.worn.items" cdkDrag>
+        <div class="row">
+          <div class="col-sm-1 col-xs-1" style="text-align: center">
+            <img src="../../assets/imgs/{{item.img}}" style="width:25px; margin-top: 8px" />
+          </div>
+          <div class="col-sm-11  col-xs-11">
+            <h4>{{item.name}}</h4>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
-<div class="row">
-  <div class="RuckContainer">
-    <mat-list>
-      <h3 mat-subheader>Rucksack</h3>
-      <mat-list-item *ngFor="let folder of folders">
-        <mat-icon mat-list-icon>folder</mat-icon>
-        <h4 mat-line>{{folder.name}}</h4>
-        <p mat-line> {{folder.updated | date}} </p>
-      </mat-list-item>
-      <mat-divider></mat-divider>
-      <h3 mat-subheader>Notes</h3>
-      <mat-list-item *ngFor="let note of notes">
-        <mat-icon mat-list-icon>note</mat-icon>
-        <h4 mat-line>{{note.name}}</h4>
-        <p mat-line> {{note.updated | date}} </p>
-      </mat-list-item>
-    </mat-list>
+<div class="WornContainer">
+  <div class="row">
+    <div class="WornLabel">
+      <div class="row">
+        <div class="col-sm-11 col-xs-11">
+          <h3 mat-subheader>RuckSack</h3>
+        </div>
+        <div class="col-sm-1 col-xs-1">
+          <img src="../../assets/imgs/rucksack.png" style="width:50px" />
+        </div>
+      </div>
+    </div>
+    <div cdkDropList class="col-sm-10 Items" (cdkDropListDropped)="drop($event)">
+      <div class="example-box" *ngFor="let item of Character.worn.items" cdkDrag>
+        <div class="row">
+          <div class="col-sm-1 col-xs-1" style="text-align: center">
+            <img src="../../assets/imgs/{{item.img}}" style="width:25px; margin-top: 8px" />
+          </div>
+          <div class="col-sm-11  col-xs-11">
+            <h4>{{item.name}}</h4>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
