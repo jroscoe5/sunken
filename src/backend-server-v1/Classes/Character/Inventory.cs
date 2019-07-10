@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace character_system
+namespace Sunken.Character
 {
     public class Inventory
     {
