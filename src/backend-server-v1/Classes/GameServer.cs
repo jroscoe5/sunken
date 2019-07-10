@@ -10,6 +10,7 @@ namespace Sunken.Server
     public enum GameState
     {
         WaitingForUsernames,
+        RoomGeneration,
         InitiativeRolling,
         TurnTaking,
         Looting,
@@ -52,10 +53,7 @@ namespace Sunken.Server
         {
             return await Task.Run(() =>
             {
-                lock (stateLock)
-                {
-                    return state.ToString();
-                }
+                return state.ToString();
             });
         }
 
@@ -72,18 +70,23 @@ namespace Sunken.Server
                             GameCharacter character = new GameCharacter(name: username);
                             characters.Add(character);
                             if (characters.Count == numMortals)
-                                state = GameState.InitiativeRolling;
+                                state = GameState.RoomGeneration;
+                            // Once the last mortal registers, generate the first level.
+                            Task.Run(GenerateLevel);
                             return character.Id;
                         }          
                     }
                 }
-                return null;
+                return new Exception("Game is full").ToString();
             });
         }
 
-        public async Task<string> CalculateInitiative()
+        private async Task GenerateLevel()
         {
+            await Task.Run(() =>
+            {
 
+            });
         }
     }
 }
