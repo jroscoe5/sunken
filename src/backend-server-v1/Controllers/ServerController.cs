@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using Microsoft.AspNetCore.Mvc;
 using Sunken.Server;
+using Sunken.Map;
 
 namespace Sunken.Controllers
 {
@@ -33,6 +34,10 @@ namespace Sunken.Controllers
                     {
                         return exc.ToString();
                     }
+
+                case "testing":
+                    Room room = new Room();
+                    return room.ToString();
 
                 default:
                     return null;
